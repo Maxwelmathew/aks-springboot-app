@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-springboot-deployment
+  name: our-aks-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: springboot-app
+      app: aks-app
   template:
     metadata:
       labels:
-        app: springboot-app
+        app: aks-app
     spec:
       containers:
-      - name: my-springboot-app
-        image: myacrrepo3210.azurecr.io/myacrrepo3210:latest
+      - name: springboot-app
+        image: projectdevacr.azurecr.io/projectdevacr:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8085
@@ -24,15 +24,15 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: springboot-app
-    k8s-app: springboot-app
-  name: springboot-app
+    app: aks-app
+    k8s-app: aks-app
+  name: aks-app
 spec:
   ports:
   - name: http
     port: 80
     protocol: TCP
-    targetPort: 8085
+    targetPort: 8085 
   type: LoadBalancer
   selector:
-    app: springboot-app
+    app: aks-app
